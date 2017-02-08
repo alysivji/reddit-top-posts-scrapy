@@ -3,9 +3,9 @@
 # Please refer to the documentation for information on how to create and manage
 # your spiders.
 
+from datetime import datetime as dt
 import scrapy
 from reddit.items import RedditItem
-from datetime import datetime
 
 class PostSpider(scrapy.Spider):
     name = 'post'
@@ -15,9 +15,9 @@ class PostSpider(scrapy.Spider):
         ('datascience', 'week'),
         ('python', 'week'),
         ('programming', 'week'),
+        ('machinelearning', 'week')
     ]
 
-    #period = 'week'
     start_urls = ['https://www.reddit.com/r/' + sub + '/top/?sort=top&t=' + period \
         for sub, period in reddit_urls]
 
@@ -29,7 +29,7 @@ class PostSpider(scrapy.Spider):
         for post in response.css('div.thing'):
             item = RedditItem()
 
-            item['date'] = datetime.today()
+            item['date'] = dt.today()
             item['sub'] = sub
             item['title'] = post.css('a.title::text').extract_first()
             item['url'] = post.css('a.title::attr(href)').extract_first()

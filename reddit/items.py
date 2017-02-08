@@ -7,7 +7,6 @@
 
 import scrapy
 
-
 class RedditItem(scrapy.Item):
     '''
     Defining the storage containers for the data we
