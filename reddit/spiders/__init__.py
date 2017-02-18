@@ -32,8 +32,13 @@ class PostSpider(scrapy.Spider):
             item['date'] = dt.today()
             item['sub'] = sub
             item['title'] = post.css('a.title::text').extract_first()
+
             item['url'] = post.css('a.title::attr(href)').extract_first()
-            item['score'] = post.css('div.unvoted::text').extract_first()
+            ## if self-post, add reddit base url (as it's relative by default)
+            if item['url'][:3] == '/r/':
+                item['url'] = 'https://www.reddit.com' + item['url']
+
+            item['score'] = int(post.css('div.unvoted::text').extract_first())
             item['commentsUrl'] = post.css('a.comments::attr(href)').extract_first()
 
             yield item
