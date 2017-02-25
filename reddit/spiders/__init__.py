@@ -30,6 +30,7 @@ class PostSpider(scrapy.Spider):
             item = RedditItem()
 
             item['date'] = dt.today()
+            item['date_str'] = item['date'].strftime('%Y-%m-%d')
             item['sub'] = sub
             item['title'] = post.css('a.title::text').extract_first()
 

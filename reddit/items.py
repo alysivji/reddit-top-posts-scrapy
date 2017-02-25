@@ -14,6 +14,7 @@ class RedditItem(scrapy.Item):
     '''
 
     date = scrapy.Field()
+    date_str = scrapy.Field()
     sub = scrapy.Field()
     title = scrapy.Field()
     url = scrapy.Field()
