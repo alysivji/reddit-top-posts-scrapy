@@ -3,6 +3,7 @@
 
 from scrapy.crawler import CrawlerProcess
 from reddit.spiders import PostSpider
+from top_post_emailer import email_last_scraped_date
 
 if __name__ == '__main__':
     process = CrawlerProcess({
@@ -11,3 +12,5 @@ if __name__ == '__main__':
 
     process.crawl(PostSpider)
     process.start() # the script will block here until the crawling is finished
+
+    email_last_scraped_date()

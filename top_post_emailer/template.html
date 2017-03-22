@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Reddit Top </title>
+</head>
+<body>
+    <ul id="posts">
+    {% for selected_sub in Post.objects(date_str__gte=day_to_pull).distinct('sub') %}
+        <h3>{{ selected_sub }}</h3>
+
+        {% for post in Post.objects(date_str__gte=day_to_pull, sub=selected_sub) %}
+            <li><a href="{{ post.url }}">{{ post.title }}</a> (Score: {{ post.score }} | <a href=" {{ post.commentsUrl }}">Comments</a>)</li>
+        {% endfor %}
+
+    {% endfor %}
+    </ul>
+
+</body>
+</html>
