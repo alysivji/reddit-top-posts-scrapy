@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import os
+import configparser
+
 # Scrapy settings for reddit project
 #
 # For simplicity, this file contains only settings considered important or
@@ -73,7 +76,13 @@ It’s customary to define these numbers in the 0-1000 range.
 ITEM_PIPELINES = {
     'reddit.pipelines.MongoPipeline': 300,
 }
-MONGO_URI = 'mongodb://localhost:27017'
+
+## get mongodb params (using configparser)
+config = configparser.ConfigParser()
+config.read(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'settings.cfg'))
+mlab_uri = config.get('MongoDB', 'mlab_uri')
+
+MONGO_URI = mlab_uri
 MONGO_DATABASE = 'sivji-sandbox'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
