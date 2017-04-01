@@ -1,0 +1,4 @@
+datascience,week
+python,week
+programming,week
+machinelearning,week

@@ -3,20 +3,29 @@
 # Please refer to the documentation for information on how to create and manage
 # your spiders.
 
+import os
 from datetime import datetime as dt
 import scrapy
 from reddit.items import RedditItem
+
+def get_subs_to_scrape(file):
+    """Pulls list of subreddits to scrape from text file
+    """
+    subs_to_crawl = []
+    filepath = os.path.join(os.path.abspath(os.path.dirname(__file__)), file)
+
+    # open file and parse crawler
+    with open(filepath, 'r') as f:
+        for line in f.readlines():
+            subs_to_crawl.append(tuple(line.strip('\n').split(',')))
+
+    return subs_to_crawl
 
 class PostSpider(scrapy.Spider):
     name = 'post'
     allowed_domains = ['reddit.com']
 
-    reddit_urls = [
-        ('datascience', 'week'),
-        ('python', 'week'),
-        ('programming', 'week'),
-        ('machinelearning', 'week')
-    ]
+    reddit_urls = get_subs_to_scrape('reddit_subs.txt')
 
     start_urls = ['https://www.reddit.com/r/' + sub + '/top/?sort=top&t=' + period \
         for sub, period in reddit_urls]

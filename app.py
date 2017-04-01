@@ -13,7 +13,7 @@ if __name__ == '__main__':
     logger = logging.getLogger(__name__)
 
     # only run on saturdays (once a week)
-    if date.strftime(date.today(), '%A').lower() == 'saturday':
+    if date.strftime(date.today(), '%A').lower() == 'friday':
         crawler = CrawlerProcess(get_project_settings())
 
         crawler.crawl(PostSpider)
